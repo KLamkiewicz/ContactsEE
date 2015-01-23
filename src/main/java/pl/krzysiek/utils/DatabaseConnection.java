@@ -12,9 +12,9 @@ public class DatabaseConnection {
     private String password;
 
     private DatabaseConnection(){
-        host = "jdbc:mysql://localhost:3306/ContactsEE";
-        username = "root";
-        password = "root";
+            host = "jdbc:mysql://localhost:3306/ContactsEE";
+            username = "root";
+            password = "root";
     }
 
     public static DatabaseConnection getDatabaseConnection() {
@@ -29,8 +29,11 @@ public class DatabaseConnection {
 
         try {
             if(connection==null || connection.isClosed()) {
+                Class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(host, username, password);
             }
+        }catch(ClassNotFoundException fx){
+            System.out.println(fx.getMessage());
         } catch (SQLException ex) {
             System.out.println("Could not connect: " + ex.getMessage());
         }

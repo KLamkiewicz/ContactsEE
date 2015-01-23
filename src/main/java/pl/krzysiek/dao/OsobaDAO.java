@@ -5,7 +5,10 @@ import pl.krzysiek.utils.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by krzysiek on 23.01.15.
@@ -13,9 +16,9 @@ import java.sql.SQLException;
 public class OsobaDAO {
 
     Connection conn;
-
+    PreparedStatement p;
     public int addOsoba(Osoba osoba){
-        PreparedStatement p = null;
+
         try {
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
             p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko) VALUES(?, ?)");
@@ -27,5 +30,27 @@ public class OsobaDAO {
         }
 
         return 0;
+    }
+
+    public List<Osoba> getAllOsoba(){
+        List<Osoba> osobaList = new ArrayList<Osoba>();
+        Osoba o = new Osoba();
+        ResultSet resultSet;
+
+        try{
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("SELECT * FROM Osoba");
+            resultSet = p.getResultSet();
+            while (resultSet.next()){
+                o.setImie(resultSet.getString("imie"));
+                o.setNazwisko(resultSet.getString("nazwisko"));
+                o.setId(resultSet.getInt("id"));
+                osobaList.add(o);
+            }
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+        return osobaList;
     }
 }
