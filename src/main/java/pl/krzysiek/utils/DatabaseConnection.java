@@ -33,7 +33,7 @@ public class DatabaseConnection {
                 connection = DriverManager.getConnection(host, username, password);
             }
         }catch(ClassNotFoundException fx){
-            System.out.println(fx.getMessage());
+            System.out.println("Class not found : " + fx.getMessage());
         } catch (SQLException ex) {
             System.out.println("Could not connect: " + ex.getMessage());
         }
@@ -41,7 +41,5 @@ public class DatabaseConnection {
         return connection;
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+
 }

@@ -6,7 +6,7 @@ package pl.krzysiek.model;
 
 public class Osoba {
 
-    private int id;
+    private int OsobaId;
     private String imie;
     private String nazwisko;
 
@@ -27,11 +27,20 @@ public class Osoba {
         this.nazwisko = nazwisko;
     }
 
-    public int getId() {
-        return id;
+    public int getOsobaId() {
+        return OsobaId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setOsobaId(int OsobaId) {
+        this.OsobaId = OsobaId;
+    }
+
+    @Override
+    public String toString() {
+        return "Osoba{" +
+                "OsobaId=" + OsobaId +
+                ", imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                '}';
     }
 }

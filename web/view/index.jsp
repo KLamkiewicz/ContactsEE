@@ -13,11 +13,13 @@
     <title></title>
   </head>
   <body>
-    TEST
-    <p>The data from servlet: ${data}</p>
-    <%--<c:forEach var="o" items="${osoby}">--%>
-      <%--<c:out value="${o.getImie}"/>--%>
-    <%--</c:forEach>--%>
+
+  <div id="mainPage">
+
+      Hello, users test -> <a href="${request.getContextPath()}/users">Users</a>
+
+  </div>
+
 
   </body>
 </html>

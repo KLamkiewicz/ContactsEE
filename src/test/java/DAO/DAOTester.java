@@ -7,6 +7,7 @@ import pl.krzysiek.utils.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,12 +42,19 @@ public class DAOTester {
 
     @Test
     public void addOsoba(){
-        Connection con = dbconn.getConnection();
         Osoba o = new Osoba();
         o.setImie(imie);
         o.setNazwisko(nazwisko);
         osobaDAO = new OsobaDAO();
 
         assertEquals(1, osobaDAO.addOsoba(o));
+    }
+
+    @Test
+    public void getAllOsoba(){
+        List<Osoba> osobyLista = osobaDAO.getAllOsoba();
+        for(Osoba o : osobyLista){
+            System.out.println(o);
+        }
     }
 }

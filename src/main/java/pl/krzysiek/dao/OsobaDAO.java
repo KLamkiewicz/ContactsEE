@@ -26,7 +26,7 @@ public class OsobaDAO {
             p.setString(2, osoba.getNazwisko());
             return p.executeUpdate();
         }catch (Exception ex){
-            System.out.println(ex.getMessage());
+            System.out.println("Exception while adding osoba " + ex.getMessage());
         }
 
         return 0;
@@ -40,15 +40,17 @@ public class OsobaDAO {
         try{
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
             p = conn.prepareStatement("SELECT * FROM Osoba");
-            resultSet = p.getResultSet();
+            resultSet = p.executeQuery();
+
             while (resultSet.next()){
                 o.setImie(resultSet.getString("imie"));
                 o.setNazwisko(resultSet.getString("nazwisko"));
-                o.setId(resultSet.getInt("id"));
+                o.setOsobaId(resultSet.getInt("OsobaId"));
                 osobaList.add(o);
+                o = new Osoba();
             }
         }catch (Exception ex){
-            System.out.println(ex.getMessage());
+            System.out.println("Exeception getting Osoby " + ex.getMessage());
         }
 
         return osobaList;
