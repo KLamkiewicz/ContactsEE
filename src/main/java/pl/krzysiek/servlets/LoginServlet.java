@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
                 authenticated = true;
                 HttpSession session = request.getSession();
                 session.setAttribute("user", aUser);
+                session.setMaxInactiveInterval(60*60);
             }
         }
 

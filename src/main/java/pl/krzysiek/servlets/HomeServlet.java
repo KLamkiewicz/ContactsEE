@@ -19,7 +19,9 @@ public class HomeServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        OsobaDAO o = new OsobaDAO();
+        List<Osoba> osoby = o.getAllOsoba();
+        request.setAttribute("contacts", osoby);
         request.getRequestDispatcher("view/index.jsp").forward(request, response);
     }
 

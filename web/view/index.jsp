@@ -18,17 +18,44 @@
       </style>
 
       <script>
-        <%@ include file="/resources/javascript/fle.js"%>
+        <%@ include file="/resources/javascript/main.js"%>
       </script>
 
   </head>
   <body>
 
   <div id="mainPage">
-      path <c:out value="${param.contextPath}"></c:out> path
-      <%--Hello, users test -> <a href="${request.getContextPath()}/users">Users</a>   --%>
-      Hello, users test -> <a href="/users">Users</a>
-      Hello, contacts test -> <a href="/contacts">contacts</a>
+
+      <div id="header">
+
+          <div id="loginLogout">
+          <c:choose>
+              <c:when test="${sessionScope.user !=null}">
+                  <a href="/logout">Hello <c:out value="${sessionScope.user.getLogin()}"/>, logout </a>
+              </c:when>
+              <c:otherwise>
+                  <a href="/login">Login </a>
+              </c:otherwise>
+          </c:choose>
+          </div>
+      </div>
+
+      <div id="contacts">
+          <c:forEach var="c" items="${contacts}">
+              <div data-id="${c.getOsobaId()}" id="contact">
+                  <div id="contactID">
+                      <c:out value="${c.getOsobaId()}"/>
+                  </div>
+                  <div data-hid="${c.getOsobaId()}" id="contactHidden">
+                      <c:out value="${c.getImie()}"/>
+                      <c:out value="${c.getNazwisko()}"/>
+                  </div>
+              </div>
+          </c:forEach>
+      </div>
+
+      <%--Hello, users test -> <a href="/users">Users</a>--%>
+      <%--Hello, contacts test -> <a href="/contacts">contacts</a>--%>
 
   </div>
 
