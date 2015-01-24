@@ -57,4 +57,15 @@ public class OsobaDAO {
         return osobaList;
     }
 
+    public void deleteOsoba(int id){
+        try{
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("DELETE FROM Osoba where OsobaId = ?");
+            p.setInt(1, id);
+            p.executeUpdate();
+        }catch (Exception ex){
+            System.out.println("Exeception getting Osoby " + ex.getMessage());
+        }
+    }
+
 }

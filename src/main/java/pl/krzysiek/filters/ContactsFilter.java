@@ -12,23 +12,18 @@ import java.io.IOException;
 /**
  * Created by krzysiek on 24.01.15.
  */
-@WebFilter(value = "/login", filterName = "LoginFilter")
-public class LoginFilter implements Filter {
+@WebFilter(value = "/contacts", filterName = "ContactsFilter")
+public class ContactsFilter implements Filter {
     public void destroy() {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-//        HttpServletRequest httpRequest = (HttpServletRequest) req;
-//        if(httpRequest.getMethod().equalsIgnoreCase("POST")){
-//
-//        }
-
         HttpServletRequest httpRequest = (HttpServletRequest) req;
         HttpServletResponse httpResponse = (HttpServletResponse) resp;
         HttpSession session = httpRequest.getSession();
         AUser aUser = (AUser) session.getAttribute("user");
 
-        if(aUser!=null){
+        if(aUser==null){
             httpResponse.sendRedirect("/");
             return;
         }

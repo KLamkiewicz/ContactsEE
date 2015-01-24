@@ -30,6 +30,7 @@ Login:
     </table>
 </form>
 
+<a href="/register">Register </a>
 
 </body>
 </html>

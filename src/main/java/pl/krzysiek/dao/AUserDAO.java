@@ -1,10 +1,13 @@
 package pl.krzysiek.dao;
 
 import pl.krzysiek.model.AUser;
+import pl.krzysiek.model.Osoba;
 import pl.krzysiek.utils.DatabaseConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AUserDAO {
 
@@ -31,6 +34,61 @@ public class AUserDAO {
         }
 
         return 0;
+    }
+
+    public List<Osoba> getAUserContactsList(int id){
+        List<Osoba> osoby = new ArrayList<Osoba>();
+
+        try{
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("SELECT * FROM Osoba WHERE ownerId = ?");
+            p.setInt(1, id);
+            ResultSet rs = p.executeQuery();
+            while (rs.next()) {
+                Osoba o = new Osoba();
+                o.setOsobaId(rs.getInt("OsobaId"));
+                o.setImie(rs.getString("imie"));
+                o.setNazwisko(rs.getString("nazwisko"));
+                osoby.add(o);
+            }
+        }catch (Exception ex){
+            System.out.println("Exeception getting user " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+
+        return  osoby;
+    }
+
+    public AUser getAUser(int id){
+        AUser aUser = null;
+        try{
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("SELECT * FROM AUser WHERE userId = ?");
+            p.setInt(1, id);
+            ResultSet rs = p.executeQuery();
+            while (rs.next()) {
+                aUser = new AUser();
+                aUser.setLogin(rs.getString("login"));
+                aUser.setUserId(rs.getInt("userId"));
+            }
+        }catch (Exception ex){
+            System.out.println("Exeception getting user " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+
+        return aUser;
     }
 
     public AUser getUser(String login, String password){

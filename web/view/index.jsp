@@ -31,6 +31,7 @@
           <div id="loginLogout">
           <c:choose>
               <c:when test="${sessionScope.user !=null}">
+                  <a href="/contacts">My Contacts</a>
                   <a href="/logout">Hello <c:out value="${sessionScope.user.getLogin()}"/>, logout </a>
               </c:when>
               <c:otherwise>

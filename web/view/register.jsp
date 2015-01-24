@@ -33,6 +33,10 @@ Register:
     </tr>
   </table>
 </form>
+
+<a href="/login">Login </a>
+
+
 </body>
 </html>
 
