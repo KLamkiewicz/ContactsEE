@@ -11,12 +11,24 @@
 <html>
   <head>
     <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+      <style>
+          <%@ include file="/resources/css/main.css" %>
+      </style>
+
+      <script>
+        <%@ include file="/resources/javascript/fle.js"%>
+      </script>
+
   </head>
   <body>
 
   <div id="mainPage">
-
-      Hello, users test -> <a href="${request.getContextPath()}/users">Users</a>
+      path <c:out value="${param.contextPath}"></c:out> path
+      <%--Hello, users test -> <a href="${request.getContextPath()}/users">Users</a>   --%>
+      Hello, users test -> <a href="/users">Users</a>
+      Hello, contacts test -> <a href="/contacts">contacts</a>
 
   </div>
 

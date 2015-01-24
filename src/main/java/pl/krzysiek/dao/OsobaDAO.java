@@ -17,6 +17,7 @@ public class OsobaDAO {
 
     Connection conn;
     PreparedStatement p;
+
     public int addOsoba(Osoba osoba){
 
         try {
@@ -55,4 +56,5 @@ public class OsobaDAO {
 
         return osobaList;
     }
+
 }
