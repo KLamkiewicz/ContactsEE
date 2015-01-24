@@ -4,6 +4,7 @@ package pl.krzysiek.servlets;
 
 import org.json.JSONObject;
 import pl.krzysiek.dao.AUserDAO;
+import pl.krzysiek.model.AUser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,26 +21,34 @@ import java.io.PrintWriter;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String login = request.getParameter("username");
         String password = request.getParameter("password");
-        System.out.println("Log " + login + " " + password);
-
+        boolean loginB = (login.length()>=3 && login.length()<=20)?true:false;
+        boolean passwordB = (password.length()>=5 && password.length()<=15)?true:false;
+        boolean authenticated = false;
         AUserDAO aUserDAO = new AUserDAO();
-        boolean exists = aUserDAO.userExistsAlready(login);
-        System.out.println(exists);
+
+        if(loginB && passwordB) {
+            if(aUserDAO.getUser(login, password)!=null){
+                authenticated = true;
+            }
+        }
+
         JSONObject json = null;
         response.setContentType("application/json");
         try {
             json = new JSONObject();
-            json.put("exists", exists);
+            json.put("authenticated", authenticated);
         }catch (Exception e){
-            System.out.println("ERROR " + e);
+            System.out.println("ERROR " + e.getMessage());
         }
+
         response.getWriter().print(json);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("view/login.jsp").forward(request, response);
     }
+
 }

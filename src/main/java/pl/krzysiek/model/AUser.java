@@ -9,6 +9,14 @@ public class AUser {
     private String login;
     private String haslo;
 
+    public AUser(){
+
+    }
+    public AUser(String login, String haslo){
+        this.login = login;
+        this.haslo = haslo;
+    }
+
     public int getUserId() {
         return userId;
     }
