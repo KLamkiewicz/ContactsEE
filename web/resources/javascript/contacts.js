@@ -16,3 +16,16 @@ function deleteContact(id){
     });
 
 }
+
+function createForm(){
+    $("#newContactFormStart").hide();
+    $("#newContactForm").css("display", "block");
+}
+
+function createContact(e){
+    e.preventDefault();
+
+    $("#newContactForm").css("display", "none");
+    $("#newContactFormStart").show();
+
+}
