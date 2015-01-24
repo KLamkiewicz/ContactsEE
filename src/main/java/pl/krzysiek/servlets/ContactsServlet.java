@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by krzysiek on 23.01.15.
  */
-@WebServlet("/contacts")
+@WebServlet(value = "/contacts")
 public class ContactsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

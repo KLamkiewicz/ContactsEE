@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -29,8 +30,11 @@ public class LoginServlet extends HttpServlet {
         AUserDAO aUserDAO = new AUserDAO();
 
         if(loginB && passwordB) {
-            if(aUserDAO.getUser(login, password)!=null){
+            AUser aUser = aUserDAO.getUser(login, password);
+            if(aUser!=null){
                 authenticated = true;
+                HttpSession session = request.getSession();
+                session.setAttribute("user", aUser);
             }
         }
 

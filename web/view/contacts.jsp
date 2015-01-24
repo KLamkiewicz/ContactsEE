@@ -8,6 +8,7 @@
 
 <div id="mainPage">
 
+  Logout <a href="/logout">Logo </a>
   Hello, main page -> <a href="/">Main page</a>
 
 </div>
