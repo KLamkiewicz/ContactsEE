@@ -18,16 +18,49 @@ public class OsobaDAO {
     Connection conn;
     PreparedStatement p;
 
+    public int addOsoba(Osoba osoba, int id){
+        try {
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko, email, ownerId) VALUES(?, ?, ?, ?)");
+            p.setString(1, osoba.getImie());
+            p.setString(2, osoba.getNazwisko());
+            p.setString(3, osoba.getEmail());
+            p.setInt(4, id);
+
+            return p.executeUpdate();
+        }catch (Exception ex){
+            System.out.println("Exception while adding osoba " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+
+        return 0;
+    }
+
     public int addOsoba(Osoba osoba){
 
         try {
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
-            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko) VALUES(?, ?)");
+            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko, email) VALUES(?, ?, ?)");
             p.setString(1, osoba.getImie());
             p.setString(2, osoba.getNazwisko());
+            p.setString(3, osoba.getEmail());
+
             return p.executeUpdate();
         }catch (Exception ex){
             System.out.println("Exception while adding osoba " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
         }
 
         return 0;
@@ -52,6 +85,13 @@ public class OsobaDAO {
             }
         }catch (Exception ex){
             System.out.println("Exeception getting Osoby " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
         }
 
         return osobaList;
@@ -65,7 +105,39 @@ public class OsobaDAO {
             p.executeUpdate();
         }catch (Exception ex){
             System.out.println("Exeception getting Osoby " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
         }
+    }
+
+    public boolean checkForEmail(int id, String email){
+        try {
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("Select email FROM Osoba WHERE ownerId = ? and email = ?");
+            p.setInt(1, id);
+            p.setString(2, email);
+            ResultSet rs = p.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+
+        }catch (Exception ex){
+            System.out.println("Exception while adding user " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+
+        return false;
     }
 
 }

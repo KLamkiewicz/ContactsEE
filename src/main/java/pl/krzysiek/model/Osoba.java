@@ -9,6 +9,7 @@ public class Osoba {
     private int OsobaId;
     private String imie;
     private String nazwisko;
+    private String email;
 
 
     public String getImie() {
@@ -33,6 +34,14 @@ public class Osoba {
 
     public void setOsobaId(int OsobaId) {
         this.OsobaId = OsobaId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

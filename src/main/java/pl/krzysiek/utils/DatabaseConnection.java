@@ -24,7 +24,6 @@ public class DatabaseConnection {
         return databaseConnection;
     }
 
-
     public Connection getConnection() {
 
         try {

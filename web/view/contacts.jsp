@@ -26,13 +26,26 @@
       <form name="contactForm" id="contactForm" method="POST" action="/contacts" onSubmit="return createContact(event);">
         <table id="contactFormTable">
           <tr>
-            <td><input type="text" name="username" id="username"/><br> </td>
-            <td id="usernameError" class="error"></td>
+            <td>Name: <input type="text" name="name" id="name"/><br> </td>
+            <td id="nameError" class="error"></td>
           </tr>
           <tr>
-            <td><input type="password" name="password" id="password"/> </td>
-            <td id="passwordError" class="error"></td>
+            <td>Surname: <input type="text" name="surname" id="surname"/><br> </td>
+            <td id="surnameError" class="error"></td>
           </tr>
+          <tr>
+            <td>Email: <input type="text" name="email" id="email"/><br> </td>
+            <td id="emailError" class="error"></td>
+          </tr>
+          <tr>
+            <td>Phone: <input type="text" name="phone" id="phone"/><br> </td>
+            <td id="phoneError" class="error"></td>
+          </tr>
+          <tr>
+            <td>Date of Birth: <input type="text" name="birth" id="birth"/><br> </td>
+            <td id="birthError" class="error"></td>
+          </tr>
+
           <tr>
             <td id="authError" class="error"></td>
           </tr>
