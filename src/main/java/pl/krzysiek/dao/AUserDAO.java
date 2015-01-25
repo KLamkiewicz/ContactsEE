@@ -49,6 +49,10 @@ public class AUserDAO {
                 o.setOsobaId(rs.getInt("OsobaId"));
                 o.setImie(rs.getString("imie"));
                 o.setNazwisko(rs.getString("nazwisko"));
+                o.setEmail(rs.getString("email"));
+                o.setTelefon(rs.getString("telefon"));
+                o.setDob(rs.getDate("dob"));
+
                 osoby.add(o);
             }
         }catch (Exception ex){

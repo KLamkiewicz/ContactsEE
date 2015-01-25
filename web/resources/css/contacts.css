@@ -1,3 +1,7 @@
 #newContactForm{
     display: none;
 }
+
+[data-hid]{
+    display: none;
+}

@@ -19,6 +19,11 @@ public class EditContactServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String t = request.getParameter("test");
+        System.out.println(t);
 
+        request.setAttribute("wwws", "TESTING");
+
+        request.getRequestDispatcher("view/editContact.jsp").forward(request, response);
     }
 }

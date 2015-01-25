@@ -1,3 +1,18 @@
+$(document).ready(function () {
+
+    $("[data-id]").click(function () {
+        var id = $(this).data("id");
+
+        var isNone = ($("[data-hid=" + id + "]").css("display") == "none");
+
+        if (isNone) {
+            $("[data-hid=" + id + "]").css("display", "block");
+        } else {
+            $("[data-hid=" + id + "]").css("display", "none");
+        }
+    });
+});
+
 function createForm(){
     $("#newContactFormStart").hide();
     $("#newContactForm").css("display", "block");
@@ -96,17 +111,10 @@ function validateContact(data){
             if(data.succ===0){
                 alert("Unexpected error occured");
             }else{
-                //add record on site
-            //
-            //<div data-id="${c.getOsobaId()}" id="contact">
-            //    <c:out value="${c.getImie()}"/>
-            //    <c:out value="${c.getNazwisko()}"/>
-            //    <button onclick="deleteContact(${c.getOsobaId()})">Delete</button>
-            //    </div>
-
-
                 $("#contacts").prepend("<div data-id= " + data.contactID + " id=contact>" +
-                    name + " " + surname + " " + dob +
+                    "<div id=\"contactID\">" +
+
+                    name + " " + surname + " </div>" + dob +
                     "<button onclick=\"deleteContact(" + data.contactID + ")\"> Delete </button>" +
                     "</div>");
             }
@@ -137,4 +145,22 @@ function validateWithServer(){
 function createContact(e){
     e.preventDefault();
     validateContact(null);
+}
+
+
+function testLink(){
+
+    $.ajax({
+        type: "GET",
+        url: "/editContacts",
+        data: {test: 555},
+        success: function(data) {
+            window.location.href = "/editContacts";
+            console.log(data);
+        },
+        error: function(data){
+            console.log("fail");
+        }
+    });
+
 }

@@ -17,6 +17,11 @@
 
 <div id="mainPage">
 
+  <form action="/editContacts" method="GET">
+    <input type="hidden" name="test" value="HEROOSSA"/>
+    <input type="submit" value="Go to edit">
+  </form>
+  <button  > EDIT S</button>
 
   <div id="newContactA">
     <div id="newContactFormStart">
@@ -63,13 +68,19 @@
   <div id="contacts">
   <c:forEach var="c" items="${contacts}">
     <div data-id="${c.getOsobaId()}" id="contact">
-      <c:out value="${c.getImie()}"/>
-      <c:out value="${c.getNazwisko()}"/>
+      <div id="contactID">
+          <c:out value="${c.getImie()}"/>
+          <c:out value="${c.getNazwisko()}"/>
+      </div>
+      <div data-hid="${c.getOsobaId()}" id="contactHidden">
+        <c:out value="${c.getEmail()}"/>
+        <c:out value="${c.getTelefon()}"/>
+        <c:out value="${c.getDob()}"/>
+      </div>
       <button onclick="deleteContact(${c.getOsobaId()})">Delete</button>
     </div>
   </c:forEach>
   </div>
-
 
 
   Logout <a href="/logout">Logo </a>

@@ -89,6 +89,10 @@ public class OsobaDAO {
                 o.setImie(resultSet.getString("imie"));
                 o.setNazwisko(resultSet.getString("nazwisko"));
                 o.setOsobaId(resultSet.getInt("OsobaId"));
+                o.setEmail(resultSet.getString("email"));
+                o.setTelefon(resultSet.getString("telefon"));
+                o.setDob(resultSet.getDate("dob"));
+
                 osobaList.add(o);
                 o = new Osoba();
             }
