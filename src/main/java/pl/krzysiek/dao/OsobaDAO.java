@@ -20,12 +20,16 @@ public class OsobaDAO {
 
     public int addOsoba(Osoba osoba, int id){
         try {
+
+            java.sql.Date sqlDate = new java.sql.Date(osoba.getDob().getTime());
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
-            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko, email, ownerId) VALUES(?, ?, ?, ?)");
+            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko, email, telefon, dob, ownerId) VALUES(?, ?, ?, ?, ?, ?)");
             p.setString(1, osoba.getImie());
             p.setString(2, osoba.getNazwisko());
             p.setString(3, osoba.getEmail());
-            p.setInt(4, id);
+            p.setString(4, osoba.getTelefon());
+            p.setDate(5, sqlDate);
+            p.setInt(6, id);
 
             return p.executeUpdate();
         }catch (Exception ex){

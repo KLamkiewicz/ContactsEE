@@ -5,6 +5,8 @@ import pl.krzysiek.dao.AUserDAO;
 import pl.krzysiek.dao.OsobaDAO;
 import pl.krzysiek.model.AUser;
 import pl.krzysiek.model.Osoba;
+import pl.krzysiek.service.ContactService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,26 +14,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @WebServlet(value = "/contacts", name = "ContactsServlet")
 public class ContactsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OsobaDAO osobaDAO = new OsobaDAO();
-        String email = request.getParameter("email");
-        String imie = request.getParameter("name");
-        String nazwisko = request.getParameter("surname");
-        boolean emailExists;
 
-        if(!osobaDAO.checkForEmail(((AUser)request.getSession().getAttribute("user")).getUserId(), email)){
-            HttpSession session = request.getSession();
-            AUser aUser = (AUser) session.getAttribute("user");
-            Osoba o = new Osoba();
-            o.setImie(imie);
-            o.setNazwisko(nazwisko);
-            o.setEmail(email);
-            osobaDAO.addOsoba(o, aUser.getUserId());
+        OsobaDAO osobaDAO = new OsobaDAO();
+        ContactService contactService = new ContactService(osobaDAO);
+        AUser aUser = (AUser) request.getSession().getAttribute("user");
+        boolean emailExists;
+        int success = 0;
+
+        if(!contactService.checkForEamil(aUser.getUserId(), request)){
+            success = contactService.addUser(request, aUser.getUserId());
             emailExists = false;
         }else{
             emailExists = true;
@@ -42,6 +41,7 @@ public class ContactsServlet extends HttpServlet {
         try {
             json = new JSONObject();
             json.put("emailExists", emailExists);
+            json.put("succ", success);
         }catch (Exception e){
             System.out.println("ERROR " + e.getMessage());
         }
