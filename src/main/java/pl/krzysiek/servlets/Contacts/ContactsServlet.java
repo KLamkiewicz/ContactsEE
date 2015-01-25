@@ -29,7 +29,7 @@ public class ContactsServlet extends HttpServlet {
         boolean emailExists;
         int success = 0;
 
-        if(!contactService.checkForEamil(aUser.getUserId(), request)){
+        if(!contactService.checkForEmail(aUser.getUserId(), request)){
             success = contactService.addUser(request, aUser.getUserId());
             emailExists = false;
         }else{
@@ -42,6 +42,7 @@ public class ContactsServlet extends HttpServlet {
             json = new JSONObject();
             json.put("emailExists", emailExists);
             json.put("succ", success);
+            json.put("contactID", success);
         }catch (Exception e){
             System.out.println("ERROR " + e.getMessage());
         }

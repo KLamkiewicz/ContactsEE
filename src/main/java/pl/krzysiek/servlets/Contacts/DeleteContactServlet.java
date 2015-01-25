@@ -16,8 +16,8 @@ public class DeleteContactServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OsobaDAO osobaDAO = new OsobaDAO();
         int id = Integer.parseInt(request.getParameter("id"));
-
-        osobaDAO.deleteOsoba(id);
+        AUser a = (AUser) request.getSession().getAttribute("user");
+            osobaDAO.deleteOsoba(id, a.getUserId());
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

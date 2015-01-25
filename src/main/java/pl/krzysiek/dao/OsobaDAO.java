@@ -3,10 +3,7 @@ package pl.krzysiek.dao;
 import pl.krzysiek.model.Osoba;
 import pl.krzysiek.utils.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,19 +16,27 @@ public class OsobaDAO {
     PreparedStatement p;
 
     public int addOsoba(Osoba osoba, int id){
+        int rid = 0;
         try {
 
             java.sql.Date sqlDate = new java.sql.Date(osoba.getDob().getTime());
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
-            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko, email, telefon, dob, ownerId) VALUES(?, ?, ?, ?, ?, ?)");
+            p = conn.prepareStatement("INSERT INTO Osoba(imie, nazwisko, email, telefon, dob, ownerId) VALUES(?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             p.setString(1, osoba.getImie());
             p.setString(2, osoba.getNazwisko());
             p.setString(3, osoba.getEmail());
             p.setString(4, osoba.getTelefon());
             p.setDate(5, sqlDate);
             p.setInt(6, id);
+            p.executeUpdate();
 
-            return p.executeUpdate();
+            ResultSet r = p.getGeneratedKeys();
+            if(r.next()){
+                rid = r.getInt(1);
+                System.out.println(r.getInt(1));
+            }
+
+            return  rid;
         }catch (Exception ex){
             System.out.println("Exception while adding osoba " + ex.getMessage());
         }finally {
@@ -43,7 +48,7 @@ public class OsobaDAO {
             }
         }
 
-        return 0;
+        return rid;
     }
 
     public int addOsoba(Osoba osoba){
@@ -101,11 +106,12 @@ public class OsobaDAO {
         return osobaList;
     }
 
-    public void deleteOsoba(int id){
+    public void deleteOsoba(int id, int oid){
         try{
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
-            p = conn.prepareStatement("DELETE FROM Osoba where OsobaId = ?");
+            p = conn.prepareStatement("DELETE FROM Osoba where OsobaId = ? AND ownerId = ?");
             p.setInt(1, id);
+            p.setInt(2, oid);
             p.executeUpdate();
         }catch (Exception ex){
             System.out.println("Exeception getting Osoby " + ex.getMessage());

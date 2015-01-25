@@ -18,7 +18,7 @@ public class ContactService {
         this.osobaDAO = osobaDAO;
     }
 
-    public boolean checkForEamil(int id, HttpServletRequest request){
+    public boolean checkForEmail(int id, HttpServletRequest request){
         String email = request.getParameter("email");
         return  osobaDAO.checkForEmail(id, email);
 

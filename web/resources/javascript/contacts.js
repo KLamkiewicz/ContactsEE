@@ -97,6 +97,18 @@ function validateContact(data){
                 alert("Unexpected error occured");
             }else{
                 //add record on site
+            //
+            //<div data-id="${c.getOsobaId()}" id="contact">
+            //    <c:out value="${c.getImie()}"/>
+            //    <c:out value="${c.getNazwisko()}"/>
+            //    <button onclick="deleteContact(${c.getOsobaId()})">Delete</button>
+            //    </div>
+
+
+                $("#contacts").prepend("<div data-id= " + data.contactID + " id=contact>" +
+                    name + " " + surname + " " + dob +
+                    "<button onclick=\"deleteContact(" + data.contactID + ")\"> Delete </button>" +
+                    "</div>");
             }
 
             $("#newContactForm").find('input:text, input:password, input:file, select, textarea').val('');
