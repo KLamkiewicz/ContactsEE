@@ -118,14 +118,16 @@ function validateContact(data){
             if(data.succ===0){
                 alert("Unexpected error occured");
             }else{
-                $("#contacts").append("<div data-id= " + data.contactID + " id=contact>" +
+                $("#contacts").append("<div class=\"panel panel-default\" data-id= " + data.contactID + " id=contact>" +
+                    "<ul class=\"list-group\">" +
                     "<div id=\"contactID\">" +
-                    name + " " + surname +
+                    "<li class=\"list-group-item list-group-item-success\">" +
+                name + " " + surname + "</li>" +
                     " </div>" +
                     "<div data-hid=\"" + data.contactID + "\" id=\"contactHidden\" style=\"display: none;\"> "  +
-                        dob +
-                    "</div>" + formT(data.contactID, name, surname, email, phone, dob) +
 
+                     formT(data.contactID, name, surname, email, phone, dob) +
+                    "</ul>" +
                     "</div>");
             }
             listen();
@@ -159,6 +161,12 @@ function createContact(e){
 
 var formT = function(id, imie, nazwisko, email, telefon, dob){
 
+    var i1 = "<li class=\"list-group-item\">" + email  +"</li>";
+    var i2 = "<li class=\"list-group-item\">" + telefon  +"</li>";
+    var i3 = "<li class=\"list-group-item\">" + dob  +"</li>";
+
+
+    var a = "</div>";
     var left = "<div id=\"formControl\"><form action=\"editContacts\" method=\"GET\">";
     var c = "<input type=\"hidden\" name=\"contactId\" value=\"" + id +"\"/>";
     var i = "<input type=\"hidden\" name=\"imie\" value=\"" + imie +"\"/>";
@@ -166,23 +174,10 @@ var formT = function(id, imie, nazwisko, email, telefon, dob){
     var e = "<input type=\"hidden\" name=\"email\" value=\"" + email + "\"/>";
     var t ="<input type=\"hidden\" name=\"telefon\" value=\""+ telefon +"\"/>";
     var d = "<input type=\"hidden\" name=\"dob\" value=\""+ dob +"\"/>";
-    var right = "<input type=\"submit\" value=\"Edit\">" + "</form>";
+    var right = "<input class=\"btn btn-primary\" type=\"submit\" value=\"Edit\">" + "</form>";
 
-    var bl = "<button onclick=\"deleteContact(";
+    var bl = "<button class=\"btn btn-danger\" onclick=\"deleteContact(";
     var br = ")>Delete</button></div>"
 
-    return left+c+i+n+e+t+d+right+bl+id+br;
+    return i1+i2+i3+a+left+c+i+n+e+t+d+right+bl+id+br;
 }
-
-var editFormL = "<div id=\"formControl\"> <form action=\"/editContacts\" method=\"GET\">" +
-"<input type=\"hidden\" name=\"contactId\" value=\"${c.getOsobaId()}\"/>" +
-"<input type=\"hidden\" name=\"imie\" value=\"${c.getImie()}\"/>" +
-"<input type=\"hidden\" name=\"nazwisko\" value=\"${c.getNazwisko()}\"/>" +
-"<input type=\"hidden\" name=\"email\" value=\"${c.getEmail()}\"/>" +
-"<input type=\"hidden\" name=\"telefon\" value=\"${c.getTelefon()}\"/>" +
-"<input type=\"hidden\" name=\"dob\" value=\"${c.getDob()}\"/>" +
-"<input type=\"submit\" value=\"Edit\">" +
-"</form>"+
-"<button onclick=\"deleteContact(";
-
-var editFormR = ")\">Delete</button> </div>";

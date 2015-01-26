@@ -42,9 +42,9 @@
 
   <div id="newContactA">
     <div id="newContactFormStart">
-        <button onclick="createForm()">Add Contact</button>
+        <button class="btn btn-success" onclick="createForm()">Add new Contact</button>
     </div>
-    <div id="newContactForm">
+    <div id="newContactForm" >
       <form name="contactForm" id="contactForm" method="POST" action="/contacts" onSubmit="return createContact(event);">
         <table id="contactFormTable">
           <tr>
@@ -73,7 +73,7 @@
           </tr>
           <tr>
             <td>
-              <input type="submit" value="Create contact">
+              <input class="btn btn-success" type="submit" value="Create contact">
             </td>
           </tr>
         </table>
@@ -84,24 +84,11 @@
 
   <div id="contacts">
   <c:forEach var="c" items="${contacts}">
-    <div data-id="${c.getOsobaId()}" id="contact">
+    <div data-id="${c.getOsobaId()}" id="contact" class="panel panel-default">
       <ul class="list-group">
         <div id="contactID">
           <li class="list-group-item list-group-item-success">
             <c:out value="${c.getImie()}"/>  <c:out value="${c.getNazwisko()}"/>
-
-            <div id="formControl">
-              <form action="/editContacts" method="GET">
-                <input type="hidden" name="contactId" value="${c.getOsobaId()}"/>
-                <input type="hidden" name="imie" value="${c.getImie()}"/>
-                <input type="hidden" name="nazwisko" value="${c.getNazwisko()}"/>
-                <input type="hidden" name="email" value="${c.getEmail()}"/>
-                <input type="hidden" name="telefon" value="${c.getTelefon()}"/>
-                <input type="hidden" name="dob" value="${c.getDob()}"/>
-                <input type="submit" value="Edit">
-              </form>
-              <button onclick="deleteContact(${c.getOsobaId()})">Delete</button>
-            </div>
           </li>
         </div>
 
@@ -112,6 +99,18 @@
         </div>
       </ul>
 
+      <div id="formControl">
+        <form action="/editContacts" method="GET">
+          <input type="hidden" name="contactId" value="${c.getOsobaId()}"/>
+          <input type="hidden" name="imie" value="${c.getImie()}"/>
+          <input type="hidden" name="nazwisko" value="${c.getNazwisko()}"/>
+          <input type="hidden" name="email" value="${c.getEmail()}"/>
+          <input type="hidden" name="telefon" value="${c.getTelefon()}"/>
+          <input type="hidden" name="dob" value="${c.getDob()}"/>
+          <input type="submit" value="Edit" class="btn btn-primary">
+        </form>
+        <button class="btn btn-danger" onclick="deleteContact(${c.getOsobaId()})">Delete</button>
+      </div>
     </div>
   </c:forEach>
   </div>

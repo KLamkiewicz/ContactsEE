@@ -60,7 +60,7 @@
             <td id="birthError" class="error"></td>
         </tr>
         <tr>
-            <td>Name: <input type="hidden" type="text" name="contactId" id="contactId" value="${contactId}"/><br> </td>
+            <td><input type="hidden" type="text" name="contactId" id="contactId" value="${contactId}"/><br> </td>
             <td id="nonimp" class="error"></td>
         </tr>
 
@@ -69,7 +69,7 @@
         </tr>
         <tr>
             <td>
-                <input type="submit" value="Edit contact">
+                <input type="submit" value="Edit contact" class="btn btn-success">
             </td>
         </tr>
     </table>
