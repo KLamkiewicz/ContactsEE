@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by krzysiek on 25.01.15.
+ * Created by krzysiek on 26.01.15.
  */
-@WebFilter(value="/editContacts", filterName = "EditcontactsFilter")
-public class EditcontactsFilter implements Filter {
+@WebFilter(value = "/deleteContacts", filterName = "DeleteContactsFilter")
+public class DeleteContactsFilter implements Filter {
     public void destroy() {
     }
 
@@ -23,14 +23,14 @@ public class EditcontactsFilter implements Filter {
         AUser aUser = (AUser) httpreq.getSession().getAttribute("user");
         ContactService contactService = new ContactService();
         boolean belong = false;
-        try{
-            belong = contactService.contactBelongsToUser(aUser.getUserId(), Integer.parseInt(req.getParameter("contactId")));
+        int contactId = Integer.parseInt(httpreq.getParameter("id"));
+        try {
+            belong = contactService.contactBelongsToUser(aUser.getUserId(), contactId);
         }catch (Exception e){
-            httpResponse.sendRedirect("/");
+            httpResponse.sendRedirect("/contacts");
         }
-
         if(!belong){
-            httpResponse.sendRedirect("/");
+            httpResponse.sendRedirect("/contacts");
             return;
         }
 

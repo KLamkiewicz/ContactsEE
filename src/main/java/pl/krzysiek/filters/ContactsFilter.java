@@ -28,6 +28,8 @@ public class ContactsFilter implements Filter {
             return;
         }
 
+        //if post not mine
+
         chain.doFilter(req, resp);
     }
 

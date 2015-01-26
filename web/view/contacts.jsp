@@ -18,7 +18,7 @@
 <div id="mainPage">
 
   <form action="/editContacts" method="GET">
-    <input type="hidden" name="test" value="HEROOSSA"/>
+    <input type="hidden" name="contactId" value="1"/>
     <input type="submit" value="Go to edit">
   </form>
   <button  > EDIT S</button>

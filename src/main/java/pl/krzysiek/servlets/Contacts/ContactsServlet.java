@@ -23,8 +23,8 @@ public class ContactsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        OsobaDAO osobaDAO = new OsobaDAO();
-        ContactService contactService = new ContactService(osobaDAO);
+
+        ContactService contactService = new ContactService();
         AUser aUser = (AUser) request.getSession().getAttribute("user");
         boolean emailExists;
         int success = 0;

@@ -19,8 +19,8 @@ public class EditContactServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String t = request.getParameter("test");
-        System.out.println(t);
+        int contactId = Integer.parseInt(request.getParameter("contactId"));
+        System.out.println("I AM IN SERVLET " + contactId);
 
         request.setAttribute("wwws", "TESTING");
 

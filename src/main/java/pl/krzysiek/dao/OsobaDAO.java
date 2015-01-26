@@ -110,12 +110,11 @@ public class OsobaDAO {
         return osobaList;
     }
 
-    public void deleteOsoba(int id, int oid){
+    public void deleteOsoba(int id){
         try{
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
-            p = conn.prepareStatement("DELETE FROM Osoba where OsobaId = ? AND ownerId = ?");
+            p = conn.prepareStatement("DELETE FROM Osoba where OsobaId = ?");
             p.setInt(1, id);
-            p.setInt(2, oid);
             p.executeUpdate();
         }catch (Exception ex){
             System.out.println("Exeception getting Osoby " + ex.getMessage());
@@ -141,7 +140,32 @@ public class OsobaDAO {
             }
 
         }catch (Exception ex){
-            System.out.println("Exception while adding user " + ex.getMessage());
+            System.out.println("Exception while checking for email " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+
+        return false;
+    }
+
+    public boolean contactBelongsToUser(int userId, int contactId){
+        try {
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("Select email FROM Osoba WHERE ownerId = ? and OsobaId = ?");
+            p.setInt(1, userId);
+            p.setInt(2, contactId);
+            ResultSet rs = p.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+
+        }catch (Exception ex){
+            System.out.println("Exception while checking contact " + ex.getMessage());
         }finally {
             try {
                 if(conn!=null)

@@ -14,14 +14,18 @@ import java.util.Date;
 public class ContactService {
     private OsobaDAO osobaDAO;
 
-    public  ContactService(OsobaDAO osobaDAO){
-        this.osobaDAO = osobaDAO;
+    public  ContactService(){
+        osobaDAO = new OsobaDAO();
     }
 
     public boolean checkForEmail(int id, HttpServletRequest request){
         String email = request.getParameter("email");
         return  osobaDAO.checkForEmail(id, email);
 
+    }
+
+    public boolean contactBelongsToUser(int id, int cid){
+        return osobaDAO.contactBelongsToUser(id, cid);
     }
 
     public int addUser(HttpServletRequest request, int id){
