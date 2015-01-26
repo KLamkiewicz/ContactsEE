@@ -3,8 +3,15 @@
 <html>
 <head>
   <title></title>
+
+  <style>
+    <%@ include file="/resources/css/bootstrap.css" %>
+  </style>
+
 </head>
 <body>
+
+
 
 <div id="mainPage">
 

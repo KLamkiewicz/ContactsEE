@@ -4,6 +4,9 @@
 <head>
     <title></title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <style>
+        <%@ include file="/resources/css/bootstrap.css" %>
+    </style>
 
     <style>
       <%@ include file="/resources/css/edit.css" %>
@@ -15,7 +18,24 @@
 </head>
 <body>
 
-Edit:
+<div id="mainPage">
+<nav class="navbar navbar-default navbar-static-top">
+    <div id="header">
+        <div id="loginLogout">
+            <a href="/" class="btn btn-default navbar-btn">Main Page</a>
+            <c:choose>
+                <c:when test="${sessionScope.user !=null}">
+                    <a href="/contacts" class="btn btn-default navbar-btn">My Contacts</a>
+                    <a href="/logout" class="btn btn-default navbar-btn">Hello <c:out value="${sessionScope.user.getLogin()}"/>, logout </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/login" class="btn btn-default navbar-btn">Login </a>
+                    <a href="/register" class="btn btn-default navbar-btn">Register </a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
+</nav>
 
 <form name="editContactForm" id="editContactForm" method="POST" action="/editContacts" onSubmit="return validateEdit(event);">
     <table id="contactFormTable">
@@ -54,5 +74,6 @@ Edit:
         </tr>
     </table>
 </form>
+    </div>
 </body>
 </html>

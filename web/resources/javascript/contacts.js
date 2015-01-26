@@ -1,8 +1,8 @@
-$(document).ready(function () {
 
+var listen = function(){
+    $("[data-id]").unbind("click");
     $("[data-id]").click(function () {
         var id = $(this).data("id");
-
         var isNone = ($("[data-hid=" + id + "]").css("display") == "none");
 
         if (isNone) {
@@ -11,6 +11,10 @@ $(document).ready(function () {
             $("[data-hid=" + id + "]").css("display", "none");
         }
     });
+}
+
+$(document).ready(function () {
+    listen();
 });
 
 function createForm(){
@@ -54,15 +58,17 @@ function validateBirth(dob){
 }
 
 function validateContact(data){
-    var name = $("#name").val().length;
-    var surname = $("#surname").val().length;
+    var name = $("#name").val();
+    var namel = name.length;
+    var surname = $("#surname").val();
+    var surnamel = surname.length;
     var email = $("#email").val();
     var phone = $("#phone").val();
     var dob = $("#birth").val();
     var isValidatedFront = true;
 
-    var nameValid = (name>=2 && name<=20);
-    var surnameValid = (surname>=2 && surname<=30);
+    var nameValid = (namel>=2 && namel<=20);
+    var surnameValid = (surnamel>=2 && surnamel<=30);
     var emailValid = validateEmail(email);
     var phoneValid = (phone.length===10)?validatePhone(phone):false;
     var dobValid = (dob.length===10)?validateBirth(dob):false;
@@ -112,14 +118,17 @@ function validateContact(data){
             if(data.succ===0){
                 alert("Unexpected error occured");
             }else{
-                $("#contacts").prepend("<div data-id= " + data.contactID + " id=contact>" +
+                $("#contacts").append("<div data-id= " + data.contactID + " id=contact>" +
                     "<div id=\"contactID\">" +
+                    name + " " + surname +
+                    " </div>" +
+                    "<div data-hid=\"" + data.contactID + "\" id=\"contactHidden\" style=\"display: none;\"> "  +
+                        dob +
+                    "</div>" + formT(data.contactID, name, surname, email, phone, dob) +
 
-                    name + " " + surname + " </div>" + dob +
-                    "<button onclick=\"deleteContact(" + data.contactID + ")\"> Delete </button>" +
                     "</div>");
             }
-
+            listen();
             $("#newContactForm").find('input:text, input:password, input:file, select, textarea').val('');
             $("#newContactForm").css("display", "none");
             $("#newContactFormStart").show();
@@ -148,4 +157,32 @@ function createContact(e){
     validateContact(null);
 }
 
+var formT = function(id, imie, nazwisko, email, telefon, dob){
 
+    var left = "<div id=\"formControl\"><form action=\"editContacts\" method=\"GET\">";
+    var c = "<input type=\"hidden\" name=\"contactId\" value=\"" + id +"\"/>";
+    var i = "<input type=\"hidden\" name=\"imie\" value=\"" + imie +"\"/>";
+    var n ="<input type=\"hidden\" name=\"nazwisko\" value=\"" + nazwisko + "\"/>";
+    var e = "<input type=\"hidden\" name=\"email\" value=\"" + email + "\"/>";
+    var t ="<input type=\"hidden\" name=\"telefon\" value=\""+ telefon +"\"/>";
+    var d = "<input type=\"hidden\" name=\"dob\" value=\""+ dob +"\"/>";
+    var right = "<input type=\"submit\" value=\"Edit\">" + "</form>";
+
+    var bl = "<button onclick=\"deleteContact(";
+    var br = ")>Delete</button></div>"
+
+    return left+c+i+n+e+t+d+right+bl+id+br;
+}
+
+var editFormL = "<div id=\"formControl\"> <form action=\"/editContacts\" method=\"GET\">" +
+"<input type=\"hidden\" name=\"contactId\" value=\"${c.getOsobaId()}\"/>" +
+"<input type=\"hidden\" name=\"imie\" value=\"${c.getImie()}\"/>" +
+"<input type=\"hidden\" name=\"nazwisko\" value=\"${c.getNazwisko()}\"/>" +
+"<input type=\"hidden\" name=\"email\" value=\"${c.getEmail()}\"/>" +
+"<input type=\"hidden\" name=\"telefon\" value=\"${c.getTelefon()}\"/>" +
+"<input type=\"hidden\" name=\"dob\" value=\"${c.getDob()}\"/>" +
+"<input type=\"submit\" value=\"Edit\">" +
+"</form>"+
+"<button onclick=\"deleteContact(";
+
+var editFormR = ")\">Delete</button> </div>";

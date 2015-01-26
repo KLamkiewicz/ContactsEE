@@ -5,3 +5,9 @@
 [data-hid]{
     display: none;
 }
+
+#contact{
+    width: 350px;
+    margin-left: 30px;
+    padding-bottom: 30px;
+}
