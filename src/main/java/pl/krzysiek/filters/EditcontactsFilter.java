@@ -23,8 +23,6 @@ public class EditcontactsFilter implements Filter {
         AUser aUser = (AUser) httpreq.getSession().getAttribute("user");
         ContactService contactService = new ContactService();
         boolean belong = false;
-        System.out.println("INSIDE FILTER");
-        System.out.println(req.getParameter("contactId"));
 
         try{
             belong = contactService.contactBelongsToUser(aUser.getUserId(), Integer.parseInt(req.getParameter("contactId")));

@@ -17,9 +17,7 @@ public class EditContactServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         OsobaDAO osobaDAO = new OsobaDAO();
-        System.out.println( " INSIDE POST");
         int id = Integer.parseInt(request.getParameter("contactId"));
-        System.out.println("GOT " + id);
         ContactService contactService = new ContactService();
         boolean canBeUpdated =  contactService.updateUser(request, id);
 
