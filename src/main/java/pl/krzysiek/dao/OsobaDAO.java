@@ -131,7 +131,7 @@ public class OsobaDAO {
     public boolean checkForEmail(int id, String email){
         try {
             conn = DatabaseConnection.getDatabaseConnection().getConnection();
-            p = conn.prepareStatement("Select email FROM Osoba WHERE ownerId = ? and email = ?");
+            p = conn.prepareStatement("SELECT email FROM Osoba WHERE ownerId = ? and email = ?");
             p.setInt(1, id);
             p.setString(2, email);
             ResultSet rs = p.executeQuery();
@@ -176,6 +176,68 @@ public class OsobaDAO {
         }
 
         return false;
+    }
+
+    public boolean canUpdate(String email, int osobaId, int userId) {
+        try {
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("SELECT EXISTS(SELECT 1 FROM ContactsEE.Osoba WHERE OsobaId!=? AND email=? and  ownerId= ?)");
+            p.setInt(1, osobaId);
+            p.setString(2, email);
+            p.setInt(3, userId);
+            ResultSet rs = p.executeQuery();
+            while(rs.next()){
+                //ResultSetMetaData rsmd = rs.getMetaData();
+                //System.out.println(rs.getInt(rsmd.getColumnName(1)));
+                return rs.getInt(1)==0?true:false;
+            }
+        }catch (Exception ex){
+            System.out.println("Exception while checking if can update " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+        return false;
+    }
+
+    public boolean updateContact(Osoba o){
+        boolean updated = false;
+
+        try {
+
+            conn = DatabaseConnection.getDatabaseConnection().getConnection();
+            p = conn.prepareStatement("UPDATE Osoba set imie=?, nazwisko=?, email=?, telefon=?, dob=? WHERE OsobaId = ?");
+            p.setString(1, o.getImie());
+            p.setString(2, o.getNazwisko());
+            p.setString(3, o.getEmail());
+            p.setString(4, o.getTelefon());
+            p.setInt(6, o.getOsobaId());
+
+            try {
+                java.sql.Date sqlDate = new java.sql.Date(o.getDob().getTime());
+                p.setDate(5, sqlDate);
+            }catch (NullPointerException ex){
+                p.setDate(5, null);
+                System.out.println("No date " + ex);
+            }
+
+            return p.executeUpdate()!=0?true:false;
+
+        }catch (Exception ex){
+            System.out.println("Exception while updating contact " + ex.getMessage());
+        }finally {
+            try {
+                if(conn!=null)
+                    conn.close();
+            }catch (Exception c){
+                System.out.println(c);
+            }
+        }
+        return updated;
     }
 
 }

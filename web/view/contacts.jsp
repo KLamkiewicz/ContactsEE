@@ -17,10 +17,7 @@
 
 <div id="mainPage">
 
-  <form action="/editContacts" method="GET">
-    <input type="hidden" name="contactId" value="1"/>
-    <input type="submit" value="Go to edit">
-  </form>
+
   <button  > EDIT S</button>
 
   <div id="newContactA">
@@ -77,7 +74,19 @@
         <c:out value="${c.getTelefon()}"/>
         <c:out value="${c.getDob()}"/>
       </div>
-      <button onclick="deleteContact(${c.getOsobaId()})">Delete</button>
+      <div id="formControl">
+        <form action="/editContacts" method="GET">
+          <input type="hidden" name="contactId" value="${c.getOsobaId()}"/>
+          <input type="hidden" name="imie" value="${c.getImie()}"/>
+          <input type="hidden" name="nazwisko" value="${c.getNazwisko()}"/>
+          <input type="hidden" name="email" value="${c.getEmail()}"/>
+          <input type="hidden" name="telefon" value="${c.getTelefon()}"/>
+          <input type="hidden" name="dob" value="${c.getDob()}"/>
+          <input type="submit" value="Edit">
+        </form>
+        <button onclick="deleteContact(${c.getOsobaId()})">Delete</button>
+      </div>
+
     </div>
   </c:forEach>
   </div>

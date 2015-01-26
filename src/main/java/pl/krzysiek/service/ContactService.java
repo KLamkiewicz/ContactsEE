@@ -28,7 +28,36 @@ public class ContactService {
         return osobaDAO.contactBelongsToUser(id, cid);
     }
 
-    public int addUser(HttpServletRequest request, int id){
+    public boolean updateUser(HttpServletRequest request, int id){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        Date d;
+        AUser aUser = (AUser) request.getSession().getAttribute("user");
+        int userId = aUser.getUserId();
+        Osoba o = new Osoba();
+        o.setOsobaId(Integer.parseInt(request.getParameter("contactId")));
+        o.setEmail(request.getParameter("email"));
+        boolean can = osobaDAO.canUpdate(o.getEmail(), o.getOsobaId(), userId);
+        if(!can){
+            return false;
+        }
+
+        o.setImie(request.getParameter("imie"));
+        o.setTelefon(request.getParameter("telefon"));
+        o.setEmail(request.getParameter("email"));
+        o.setNazwisko(request.getParameter("nazwisko"));
+        try {
+            d = sdf.parse(request.getParameter("dob"));
+            o.setDob(d);
+        }catch (Exception e){
+            System.out.println("No date available for editContact update parsee " + e);
+        }
+
+        osobaDAO.updateContact(o);
+
+        return true;
+    }
+
+    public int addContact(HttpServletRequest request, int id){
         String email = request.getParameter("email");
         String imie = request.getParameter("name");
         String nazwisko = request.getParameter("surname");
@@ -48,7 +77,7 @@ public class ContactService {
             o.setDob(d);
             System.out.println(d);
         }catch (Exception e){
-            System.out.println(e);
+            System.out.println("No date available " + e);
         }
 
         return osobaDAO.addOsoba(o, id);

@@ -37,6 +37,7 @@ function deleteContact(id){
 
 }
 
+
 function validateEmail(email){
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
@@ -148,19 +149,3 @@ function createContact(e){
 }
 
 
-function testLink(){
-
-    $.ajax({
-        type: "GET",
-        url: "/editContacts",
-        data: {test: 555},
-        success: function(data) {
-            window.location.href = "/editContacts";
-            console.log(data);
-        },
-        error: function(data){
-            console.log("fail");
-        }
-    });
-
-}

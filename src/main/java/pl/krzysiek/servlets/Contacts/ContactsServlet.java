@@ -30,7 +30,7 @@ public class ContactsServlet extends HttpServlet {
         int success = 0;
 
         if(!contactService.checkForEmail(aUser.getUserId(), request)){
-            success = contactService.addUser(request, aUser.getUserId());
+            success = contactService.addContact(request, aUser.getUserId());
             emailExists = false;
         }else{
             emailExists = true;

@@ -15,9 +15,44 @@
 </head>
 <body>
 
-Hello
+Edit:
 
-<c:out value="${wwws}"/>
+<form name="editContactForm" id="editContactForm" method="POST" action="/editContacts" onSubmit="return validateEdit(event);">
+    <table id="contactFormTable">
+        <tr>
+            <td>Name: <input type="text" name="imie" id="imie" value="${imie}"/><br> </td>
+            <td id="nameError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Surname: <input type="text" name="nazwisko" id="nazwisko" value="${nazwisko}"/><br> </td>
+            <td id="surnameError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Email: <input type="text" name="email" id="email" value="${email}"/><br> </td>
+            <td id="emailError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Phone: <input type="text" name="telefon" id="telefon" value="${telefon}"/><br> </td>
+            <td id="phoneError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Date of Birth: <input type="text" name="dob" id="dob" value="${dob}"/><br> </td>
+            <td id="birthError" class="error"></td>
+        </tr>
+        <tr>
+            <td>Name: <input type="hidden" type="text" name="contactId" id="contactId" value="${contactId}"/><br> </td>
+            <td id="nonimp" class="error"></td>
+        </tr>
 
+        <tr>
+            <td id="authError" class="error"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Edit contact">
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>
